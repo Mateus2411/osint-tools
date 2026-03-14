@@ -40,13 +40,6 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Instalação**: `pip install theHarvester`
 - **Uso**: `theHarvester -d dominio.com -b google,bing`
 
-### 5️⃣ Maltego 🔗
-**Ferramenta profissional de investigação gráfica**
-- **Site oficial**: https://www.maltego.com
-- **Função**: Investigação visual e mapeamento de conexões
-- **Usuários**: Jornalistas, investigadores, analistas de segurança
-- **Versão**: Community Edition (gratuita)
-
 ---
 
 ## 📋 Guia de Instalação Rápida
@@ -104,7 +97,6 @@ theHarvester -d empresa.com -b all -f resultados
 | **Holehe** | Descobrir contas com email | Redes sociais, plataformas online |
 | **SpiderFoot** | OSINT automático | Tudo: domínios, IPs, emails, vulnerabilidades |
 | **theHarvester** | Coleta de informações | Emails, subdomínios, hosts de múltiplas fontes |
-| **Maltego** | Investigação gráfica avançada | Visualização de conexões e relacionamentos |
 
 ---
 
@@ -132,8 +124,6 @@ holehe email@empresa.com
 
 # 3. Investigar telefones descobertos
 ./phoneinfoga.exe scan -n +5511999999999
-
-# 4. Visualizar conexões no Maltego
 ```
 
 ### 3. Investigação de Domínio/Site
@@ -218,7 +208,7 @@ pip install lxml
 - **PhoneInfoga**: https://sundowndev.github.io/phoneinfoga/
 - **Holehe**: https://github.com/megadose/holehe/wiki
 - **SpiderFoot**: https://www.spiderfoot.net/documentation
-- **Maltego**: https://docs.maltego.com/
+- **theHarvester**: https://github.com/laramies/theHarvester/wiki
 
 ### Comunidades
 - **Discord SpiderFoot**: https://discord.gg/vyvztrG
@@ -276,6 +266,6 @@ Este conjunto de ferramentas OSINT oferece capacidades abrangentes para investig
 - **PhoneInfoga**: Especialista em números de telefone
 - **Holehe**: Expert em descoberta de contas por email  
 - **SpiderFoot**: Plataforma completa de OSINT automático
-- **Maltego**: Visualização avançada de conexões
+- **theHarvester**: Coleta de informações de múltiplas fontes
 
 **Use sempre de forma ética, legal e responsável!** 🕵️‍♂️🔍
