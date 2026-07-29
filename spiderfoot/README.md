@@ -1,15 +1,371 @@
-# SpiderFoot - Guia Completo de Instalação e Uso
+# 🕷️ SpiderFoot — OSINT Automation Toolkit
 
-<a href="https://www.spiderfoot.net/r.php?u=aHR0cHM6Ly93d3cuc3BpZGVyZm9vdC5uZXQv&s=os_gh"><img src="https://www.spiderfoot.net/wp-content/themes/spiderfoot/img/spiderfoot-wide.png"></a>
+<p align="center">
+  <a href="https://www.spiderfoot.net/">
+    <img src="https://www.spiderfoot.net/wp-content/themes/spiderfoot/img/spiderfoot-wide.png" alt="SpiderFoot">
+  </a>
+</p>
 
-[![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://raw.githubusercontent.com/smicallef/spiderfoot/master/LICENSE)
-[![Python Version](https://img.shields.io/badge/python-3.7+-green)](https://www.python.org)
-[![Stable Release](https://img.shields.io/badge/version-4.0-blue.svg)](https://github.com/smicallef/spiderfoot/releases/tag/v4.0)
-[![CI status](https://github.com/smicallef/spiderfoot/workflows/Tests/badge.svg)](https://github.com/smicallef/spiderfoot/actions?query=workflow%3A"Tests")
-[![Last Commit](https://img.shields.io/github/last-commit/smicallef/spiderfoot)](https://github.com/smicallef/spiderfoot/commits/master)
-[![Codecov](https://codecov.io/github/smicallef/spiderfoot/coverage.svg)](https://codecov.io/github/smicallef/spiderfoot)
-[![Twitter Follow](https://img.shields.io/twitter/follow/spiderfoot?label=follow&style=social)](https://twitter.com/spiderfoot)
-[![Discord](https://img.shields.io/discord/770524432464216074)](https://discord.gg/vyvztrG)
+<p align="center">
+  <a href="https://raw.githubusercontent.com/smicallef/spiderfoot/master/LICENSE">
+    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+  </a>
+  <a href="https://www.python.org">
+    <img src="https://img.shields.io/badge/python-3.7+-green" alt="Python Version">
+  </a>
+  <a href="https://github.com/smicallef/spiderfoot/releases/tag/v4.0">
+    <img src="https://img.shields.io/badge/version-4.0-blue.svg" alt="Stable Release">
+  </a>
+  <a href="https://github.com/smicallef/spiderfoot/actions?query=workflow%3A"Tests"">
+    <img src="https://github.com/smicallef/spiderfoot/workflows/Tests/badge.svg" alt="CI status">
+  </a>
+  <a href="https://discord.gg/vyvztrG">
+    <img src="https://img.shields.io/discord/770524432464216074" alt="Discord">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://github.com/smicallef/spiderfoot/tree/ingles-mode">
+    <img src="https://img.shields.io/badge/🇺🇸-English%20mode-blue?style=for-the-badge" alt="English mode">
+  </a>
+</p>
+
+---
+
+## 📋 Índice
+
+- [Instalação](#-instalação)
+- [Docker](#-docker)
+- [Erros Comuns & Soluções](#-erros-comuns--soluções)
+- [Como Usar](#-como-usar)
+- [Interface Web](#-interface-web)
+- [Dados & Resultados](#-dados--resultados)
+- [Módulos](#-módulos)
+- [Segurança](#-segurança)
+
+---
+
+## ⚡ Instalação
+
+### 🪟 Windows (com correções)
+
+```bash
+# 1. Clone o repositório
+git clone https://github.com/smicallef/spiderfoot.git
+cd spiderfoot
+
+# 2. Instale as dependências Python
+pip install -r requirements.txt
+
+# 3. Instale os assets do frontend (CSS/JS)
+cd spiderfoot\static
+npm install
+cd ..\..
+
+# 4. Inicie o servidor
+py -3.14 sf.py -l 127.0.0.1:5001
+
+# Acesse: http://127.0.0.1:5001/
+```
+
+### 🐧 Linux / macOS
+
+```bash
+# 1. Clone e entre no diretório
+git clone https://github.com/smicallef/spiderfoot.git
+cd spiderfoot
+
+# 2. Instale as dependências
+pip3 install -r requirements.txt
+
+# 3. Instale os assets do frontend
+cd spiderfoot/static && npm install && cd ../..
+
+# 4. Inicie
+python3 sf.py -l 127.0.0.1:5001
+
+# Acesse: http://127.0.0.1:5001/
+```
+
+### 📦 Virtual Environment (recomendado)
+
+```bash
+python -m venv spiderfoot-env
+source spiderfoot-env/bin/activate    # Linux/Mac
+# spiderfoot-env\Scripts\activate     # Windows
+pip install -r requirements.txt
+cd spiderfoot/static && npm install && cd ../..
+python sf.py -l 127.0.0.1:5001
+```
+
+---
+
+## 🐳 Docker
+
+```bash
+# Subir com docker-compose
+docker-compose up
+
+# Ou build manual
+docker build -t spiderfoot .
+docker run -p 5001:5001 -v spiderfoot-data:/var/lib/spiderfoot spiderfoot
+
+# Acesse em: http://localhost:5001/
+```
+
+### Docker Compose — Ambientes
+
+| Comando | Descrição |
+|---|---|
+| `docker-compose up` | Básico |
+| `docker-compose -f docker-compose.yml -f docker-compose-dev.yml up` | Desenvolvimento (código mapeado no container) |
+| `docker-compose -f docker-compose.yml -f docker-compose-full.yml up` | Completo (com ferramentas CLI) |
+
+---
+
+## 🔧 Erros Comuns & Soluções
+
+### `lxml` não compila no Windows
+
+**Erro:** `Microsoft Visual C++ 14.0 or greater is required`
+
+**Causa:** O `requirements.txt` original limitava `lxml<5`, forçando compilação de versão antiga.
+
+**Solução:** Remova o limite superior do `lxml` no `requirements.txt`:
+
+```diff
+- lxml>=4.9.2,<5
++ lxml>=4.9.2
+```
+
+```bash
+pip install -r requirements.txt
+```
+
+Isso permite instalar o `lxml 6.x` (pré-compilado), sem precisar de compilador C++.
+
+---
+
+### `cryptography` ou `netaddr` com versões incompatíveis
+
+**Erro:**
+```
+google-auth 2.49.1 requires cryptography>=38.0.3
+theharvester 4.10.1 requires netaddr==1.3.0
+```
+
+**Causa:** Restrições de versão muito antigas no `requirements.txt`.
+
+**Solução** (já aplicada neste fork):
+
+```diff
+- cryptography>=3.4.8,<4
++ cryptography>=38.0.3
+
+- netaddr>=0.8.0,<1
++ netaddr>=0.8.0
+```
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### CSS/JS quebrado (página sem estilo)
+
+**Erro no console:** `Refused to apply style from '...' MIME type ('text/html')`
+
+**Causa:** Os assets de frontend (Bootstrap, jQuery, etc.) não foram baixados.
+
+**Solução:**
+
+```bash
+cd spiderfoot/static
+npm install
+# Reinicie o servidor e recarregue a página
+```
+
+---
+
+### `pyOpenSSL` — AttributeError: module 'lib' has no attribute 'GEN_EMAIL'
+
+**Erro ao iniciar:**
+```
+AttributeError: module 'lib' has no attribute 'GEN_EMAIL'
+```
+
+**Causa:** Versão antiga do `pyOpenSSL` (< 24) incompatível com Python 3.14+ / OpenSSL recente.
+
+**Solução:**
+
+```bash
+pip install "pyOpenSSL>=24.0.0"
+```
+
+---
+
+### Porta já em uso
+
+```bash
+# Use outra porta
+py -3.14 sf.py -l 127.0.0.1:5002
+
+# Ou mate o processo anterior (Windows)
+netstat -ano | findstr :5001
+taskkill /PID <PID> /F
+```
+
+---
+
+## 🚀 Como Usar
+
+### Scan Rápido via CLI
+
+```bash
+# Scan básico de domínio
+py -3.14 sf.py -s exemplo.com -o json > resultado.json
+
+# Scan com módulo específico
+py -3.14 sf.py -s exemplo.com -m sfp_whois -o csv > whois.csv
+
+# Usar todas as fontes passivas
+py -3.14 sf.py -s exemplo.com -t 1 -o json > passive.json
+```
+
+### Scan via Interface Web
+
+1. Acesse **http://127.0.0.1:5001/**
+2. Clique em **"New Scan"**
+3. Escolha o **alvo** (domínio, IP, email, etc.)
+4. Selecione o **tipo de scan**:
+   - **All** — todos os módulos disponíveis
+   - **Footprint** — mapeamento básico
+   - **Investigate** — investigação profunda
+   - **Passive** — apenas fontes passivas
+5. Configure os módulos desejados
+6. Clique em **"Run Scan"**
+
+---
+
+## 🖥️ Interface Web
+
+### Páginas
+
+| Página | Descrição |
+|---|---|
+| `/` | Lista de scans |
+| `/newscan` | Criar novo scan |
+| `/scaninfo?id=<ID>` | Resultados detalhados de um scan |
+| `/opts` | Configurações globais e API keys |
+
+### Visualização de Resultados
+
+- **Browse** — Navegue pelos dados organizados por tipo de evento
+- **Graph** — Grafo interativo das conexões entre os dados
+- **Export** — Exporte em CSV, JSON ou GEXF
+
+### Tipos de Eventos
+
+| Evento | Significado |
+|---|---|
+| `IP_ADDRESS` | IPs descobertos |
+| `EMAILADDR` | E-mails encontrados |
+| `AFFILIATE_DOMAIN` | Domínios relacionados |
+| `SOCIAL_MEDIA` | Perfis em redes sociais |
+| `VULNERABILITY` | Vulnerabilidades identificadas |
+| `MALICIOUS_IPADDR` | IPs em blacklists |
+| `DNS_NAME` | Subdomínios e hosts |
+
+---
+
+## 💾 Dados & Resultados
+
+O SpiderFoot armazena tudo em um banco SQLite em:
+
+```
+~/.spiderfoot/spiderfoot.db
+```
+
+Para consultar diretamente:
+
+```bash
+py -3.14 -c "
+import sqlite3
+conn = sqlite3.connect(r'~/.spiderfoot/spiderfoot.db')
+tables = conn.execute(\"SELECT name FROM sqlite_master WHERE type='table'\").fetchall()
+for t in tables: print(t[0])
+"
+```
+
+### Estrutura de Diretórios
+
+| Caminho | Conteúdo |
+|---|---|
+| `~/.spiderfoot/spiderfoot.db` | Banco de dados com todos os resultados |
+| `~/.spiderfoot/cache/` | Cache de requisições a APIs externas |
+| `~/.spiderfoot/logs/` | Logs de debug e erros |
+
+---
+
+## 🔌 Módulos
+
+SpiderFoot possui **200+ módulos**. A maioria funciona **sem API key**. Os que precisam de chave aparecem com 🔒 nas configurações (`/opts`).
+
+### Categorias
+
+- **DNS** — subdomínios, zone transfer, resolução
+- **WHOIS** — informações de registro de domínios
+- **Social Media** — perfis em redes sociais
+- **Threat Intelligence** — blacklists, malware, CVEs
+- **Cloud** — buckets S3, Azure Blob, DigitalOcean Spaces
+- **Certificates** — transparência de certificados SSL/TLS
+- **Breaches** — dados de vazamentos (HIBP, Dehashed)
+- **OSINT APIs** — Shodan, VirusTotal, SecurityTrails, etc.
+- **Tools** — Nmap, DNSTwist, WhatWeb, Nuclei, etc.
+
+> Veja a lista completa de módulos na seção original abaixo.
+
+---
+
+## 🛡️ Segurança
+
+### Autenticação
+
+Por padrão, o SpiderFoot **não tem autenticação** (modo desenvolvimento). Para produção:
+
+1. Crie um arquivo de senhas:
+   ```
+   echo "admin:senha_forte" > ~/.spiderfoot/passwd
+   ```
+2. Configure autenticação nas opções ou via variável de ambiente
+3. Consulte a [documentação oficial](https://www.spiderfoot.net/documentation/#security)
+
+### Boas Práticas
+
+- ✅ Use apenas em alvos **próprios ou com autorização**
+- ✅ Respeite **limites de taxa** das APIs
+- ✅ Configure **autenticação** em ambientes compartilhados
+- ✅ Use **Docker** com volumes para persistência
+- ❌ Não use para atividades maliciosas
+
+---
+
+## 📄 Licença
+
+**MIT License** — Copyright © 2022 Steve Micallef
+
+Veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+---
+
+## 🌐 Links
+
+- [Site Oficial](https://www.spiderfoot.net/)
+- [Documentação](https://www.spiderfoot.net/documentation/)
+- [GitHub](https://github.com/smicallef/spiderfoot)
+- [Discord](https://discord.gg/vyvztrG)
+- [Twitter](https://twitter.com/spiderfoot)
 
 ## 🔧 Modificações Necessárias para Windows
 
