@@ -1,5 +1,9 @@
 <%include file="HEADER.tmpl"/>
-    <h2>Scans &nbsp;<img id="loader" src="${docroot}/static/img/loader.gif"></h2>
+
+<div class="page-head">
+  <h1>Scans <img id="loader" src="${docroot}/static/img/loader.gif"></h1>
+</div>
+
 <div id="scancontent">
 % if newscan:
 <div class="alert alert-success">
@@ -34,7 +38,6 @@
     % endfor
 </ul>
 </div>
-
 % endif
 
 <script type='text/javascript' src="${docroot}/static/js/spiderfoot.scanlist.js"></script>

@@ -1,6 +1,8 @@
 <%include file="HEADER.tmpl"/>
     <script type='text/javascript' src='${docroot}/static/js/spiderfoot.opts.js'></script>
-    <h2>Settings</h2>
+    <div class="page-head">
+      <h1>Settings</h1>
+    </div>
 % if updated:
 <div class="alert alert-success">
  <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -9,7 +11,7 @@
 </div>
 % endif
 <form class="form" action='${docroot}/savesettings' id="savesettingsform" method='POST' enctype="multipart/form-data">
-<div class='text-left'>
+<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;">
     <input type=hidden id='allopts' name='allopts' value=''>
     <input type=hidden id='token' name='token' value="${token}">
     <input type="file" name='configFile' id="configFile" class='hidden' onChange='$("#savesettingsform").submit()' />
@@ -17,7 +19,6 @@
     <button id="btn-import-config" class='btn btn-info'>Import API Keys</button>
     <button id="btn-opt-export" class='btn btn-info'>Export API Keys</button>
     <button id="btn-reset-settings" class='btn btn-danger'>Reset to Factory Default</button>
-<br><br>
 </div>
 
 <div class="tabbable tabs-left">
@@ -36,7 +37,6 @@
     % endif
 % endfor
 </ul>
-</div>
 
 <div class="tab-content col-md-9">
 

@@ -13,58 +13,100 @@
     statusy = "alert-info"
   end
 %>
-<h2>${name}&nbsp;<span id='scanstatusbadge' class='badge ${statusy}'>${status}</span>&nbsp;<img id="loader" src="${docroot}/static/img/loader.gif"></h2>
-  <div class="btn-toolbar" role="toolbar" style='padding-bottom: 10px'>
-   <div class="btn-group">
-      <a id='btn-status' class="btn btn-default" onClick='scanSummaryView("${id}")'><i class='glyphicon glyphicon-eye-open'></i>&nbsp;Summary</a>
-      <a id='btn-correlations' class="btn btn-default" onClick='browseCorrelations("${id}")'><i class='glyphicon glyphicon-exclamation-sign'></i>&nbsp;Correlations</a>
-      <a id='btn-browse' class="btn btn-default" onClick='browseEventList("${id}")'><i class='glyphicon glyphicon-th-list'></i>&nbsp;Browse</a>
-      <a id='btn-graph' class="btn btn-default" onClick='graphEvents("${id}")'><i class='glyphicon glyphicon-asterisk'></i>&nbsp;Graph</a>
-      <a id='btn-info' class="btn btn-default" onClick='viewScanConfig("${id}")'><i class='glyphicon glyphicon-cog'></i>&nbsp;Scan Settings</a>
-      <a id='btn-log' class="btn btn-default" onClick='viewScanLog("${id}")'><i class='glyphicon glyphicon-book'></i>&nbsp;Log</a>
-    </div>
-    <div class='btn-group pull-right'>
-        <div id='btn-search' class='input-group pull-right'>
-          <input class='form-control' id='searchvalue' type='text' placeholder='Search...' data-toggle='popover' data-html='true' data-animation='true' data-title='Usage' data-content="Supply a regular expression encapsulated in '/', e.g. <i>/searchregex/</i> or a simple wildcard search, e.g. <i>*string*</i> or an exact value, e.g. <i>string</i>.<br /><br /><b>Note</b> that the current scope is what's searched.">
-            <div class='input-group-btn' style='width: 0px'> <!-- Chrome fix -->
-              <button class='btn btn-primary' id='searchbutton' type='button' onClick="$('#btn-search').popover('toggle');searchDirector('${id}')">
-                <i class='glyphicon glyphicon-search glyphicon glyphicon-white'></i>
-              </button>
-            </div>
-        </div>
-    </div>
-        <div class="btn-group pull-right" role="group">
-            <button id='btn-refresh' rel="tooltip" title="Refresh" class="btn btn-success btn-default" onClick='refresh()'><i class='glyphicon glyphicon-refresh glyphicon glyphicon-white'></i></button>
-            <button id='btn-download-logs' rel="tooltip" data-title="Download Scan Logs" class="btn btn-default download-button" onClick='downloadLogs("${id}")'><i class='glyphicon glyphicon-download-alt glyphicon glyphicon-white'></i></button>
-            <a id='btn-export' rel="tooltip" data-title="Export Data" class="btn btn-default dropdown-toggle download-button" data-toggle="dropdown"><i class='glyphicon glyphicon-download-alt glyphicon glyphicon-white'></i></a>
-            <ul class="dropdown-menu">
-              <li><a class='link' onClick='exportEventData("${id}", currentType, "csv")'>CSV</a></li>
-              <li><a class='link' onClick='exportEventData("${id}", currentType, "excel")'>Excel</a></li>
-            </ul>
-        </div> 
-        <div id='customtabview' role="group" class="btn-group pull-right">
-         <a id='btn-fullview' rel="tooltip" data-title="Full Data View" class="btn btn-default active" onClick='browseUpdate("full")'><i class='glyphicon glyphicon-th glyphicon glyphicon-white'></i></a>
-         <a id='btn-uniqueview' rel="tooltip" data-title="Unique Data View" class="btn btn-default" onClick='browseUpdate("unique")'><i class='glyphicon glyphicon-align-justify glyphicon glyphicon-white'></i></a>
-         <a id='btn-vizview' rel="tooltip" data-title="Visualize" class="btn btn-default dropdown-toggle" data-toggle="dropdown"><i class='glyphicon glyphicon-picture glyphicon glyphicon-white'></i></a>
-         <ul class="dropdown-menu">
-            <li><a class='link' onClick='browseUpdate("viz-bubble-data")'>Bubble (Data Element)</a></li>
-            <li><a class='link' onClick='browseUpdate("viz-bubble-source")'>Bubble (Source Data Element)</a></li>
-            <li><a class='link' onClick='browseUpdate("viz-dendro")'>Discovery Path</a></li>
-         </ul>
-        </div>
-        <div id='customvizview' class="btn-group pull-right">
-         <a id='btn-random' rel="tooltip" data-title="Random Layout" class="btn btn-default active" onClick='vizUpdate("random")'><b>R</b></a>
-         <a id='btn-forceatlas' rel="tooltip" data-title="Force Layout" class="btn btn-default" onClick='vizUpdate("force")'><b>F</b></a>
-         <a id='btn-saveimage' rel="tooltip" data-title="Save Image" class="btn btn-default dropdown-toggle" onClick='vizUpdate("download")'><i class='glyphicon glyphicon-picture glyphicon glyphicon-white'></i></a>
-        </div>
-        <div id='modifyactions' role="group" class="btn-group pull-right">
-            <a id='btn-setfp' rel="tooltip" data-title="Set/Unset False Positive flag" class="btn-warning btn btn-default dropdown-toggle" data-toggle="dropdown"><i class='glyphicon glyphicon-ban-circle glyphicon glyphicon-white'></i></a>
-            <ul class="dropdown-menu">
-                <li><a href='#' class='link' onClick='setFp(1)'>Set False Positive flag</a></li>
-                <li><a href='#' class='link' onClick='setFp(0)'>Unset False Positive flag</a></li>
-            </ul>
-        </div>
+<div class="page-head">
+  <h1>${name} <span id='scanstatusbadge' class='badge ${statusy}'>${status}</span> <img id="loader" src="${docroot}/static/img/loader.gif"></h1>
+</div>
+
+<div class="btn-toolbar" role="toolbar" style="margin-bottom:20px;display:flex;flex-wrap:wrap;gap:6px;align-items:center;">
+  <div class="btn-group" style="display:flex;flex-wrap:wrap;gap:4px;">
+    <a id='btn-status' class="btn btn-default" onClick='scanSummaryView("${id}")'>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M12 3v13M7 12l5 5 5-5M5 21h14"/></svg>
+      Summary
+    </a>
+    <a id='btn-correlations' class="btn btn-default" onClick='browseCorrelations("${id}")'>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M12 9v4M12 17h.01"/><circle cx="12" cy="12" r="9"/></svg>
+      Correlations
+    </a>
+    <a id='btn-browse' class="btn btn-default" onClick='browseEventList("${id}")'>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+      Browse
+    </a>
+    <a id='btn-graph' class="btn btn-default" onClick='graphEvents("${id}")'>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><circle cx="5" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><circle cx="19" cy="12" r="1.6"/></svg>
+      Graph
+    </a>
+    <a id='btn-info' class="btn btn-default" onClick='viewScanConfig("${id}")'>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><circle cx="12" cy="12" r="3"/><path d="M12 1v3M12 20v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M1 12h3M20 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg>
+      Settings
+    </a>
+    <a id='btn-log' class="btn btn-default" onClick='viewScanLog("${id}")'>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:4px"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+      Log
+    </a>
   </div>
+
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-left:auto;">
+    <button id='btn-refresh' rel="tooltip" title="Refresh" class="btn btn-success" onClick='refresh()'>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M1 4v6h6M23 20v-6h-6"/><path d="M20.5 9A9 9 0 005.5 15M3.5 15a9 9 0 0015-6"/></svg>
+    </button>
+    <button id='btn-download-logs' rel="tooltip" data-title="Download Scan Logs" class="btn btn-default" onClick='downloadLogs("${id}")'>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M12 3v12M8 11l4 4 4-4M4 17v2a2 2 0 002 2h12a2 2 0 002-2v-2"/></svg>
+    </button>
+    <div class="btn-group">
+      <a id='btn-export' rel="tooltip" data-title="Export Data" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class='link' onClick='exportEventData("${id}", currentType, "csv")'>CSV</a></li>
+        <li><a class='link' onClick='exportEventData("${id}", currentType, "excel")'>Excel</a></li>
+      </ul>
+    </div>
+
+    <div id='btn-search' class="input-group" style="display:inline-flex;width:auto;">
+      <input class='form-control' id='searchvalue' type='text' placeholder='Search…' data-toggle='popover' data-html='true' data-animation='true' data-title='Usage' data-content="Supply a regular expression encapsulated in '/', e.g. <i>/searchregex/</i> or a simple wildcard search, e.g. <i>*string*</i> or an exact value, e.g. <i>string</i>.<br /><br /><b>Note</b> that the current scope is what's searched." style="width:160px;">
+      <span class="input-group-btn">
+        <button class='btn btn-primary' id='searchbutton' type='button' onClick="$('#btn-search').popover('toggle');searchDirector('${id}')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        </button>
+      </span>
+    </div>
+
+    <div id='customtabview' class="btn-group">
+      <a id='btn-fullview' rel="tooltip" data-title="Full Data View" class="btn btn-default active" onClick='browseUpdate("full")'>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+      </a>
+      <a id='btn-uniqueview' rel="tooltip" data-title="Unique Data View" class="btn btn-default" onClick='browseUpdate("unique")'>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+      </a>
+      <a id='btn-vizview' rel="tooltip" data-title="Visualize" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a class='link' onClick='browseUpdate("viz-bubble-data")'>Bubble (Data Element)</a></li>
+        <li><a class='link' onClick='browseUpdate("viz-bubble-source")'>Bubble (Source Data Element)</a></li>
+        <li><a class='link' onClick='browseUpdate("viz-dendro")'>Discovery Path</a></li>
+      </ul>
+    </div>
+
+    <div id='customvizview' class="btn-group" style="display:none;">
+      <a id='btn-random' rel="tooltip" data-title="Random Layout" class="btn btn-default active" onClick='vizUpdate("random")'><b>R</b></a>
+      <a id='btn-forceatlas' rel="tooltip" data-title="Force Layout" class="btn btn-default" onClick='vizUpdate("force")'><b>F</b></a>
+      <a id='btn-saveimage' rel="tooltip" data-title="Save Image" class="btn btn-default" onClick='vizUpdate("download")'>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </a>
+    </div>
+
+    <div id='modifyactions' class="btn-group" style="display:none;">
+      <a id='btn-setfp' rel="tooltip" data-title="Set/Unset False Positive flag" class="btn btn-warning dropdown-toggle" data-toggle="dropdown">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+      </a>
+      <ul class="dropdown-menu">
+        <li><a href='#' class='link' onClick='setFp(1)'>Set False Positive flag</a></li>
+        <li><a href='#' class='link' onClick='setFp(0)'>Unset False Positive flag</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
     <script src="${docroot}/static/node_modules/sigma/build/sigma.min.js"></script>
     <script src="${docroot}/static/node_modules/sigma/build/plugins/sigma.parsers.json.min.js"></script>
     <script src="${docroot}/static/node_modules/sigma/build/plugins/sigma.plugins.dragNodes.min.js"></script>
@@ -555,15 +597,15 @@
             $("#scanreminder").hide();
             refresh = function() { browseEventList(instanceId); }
             sf.fetchData('${docroot}/scansummary', {'id': instanceId, 'by': 'type'}, function(data) {
-                            var table = "<table id='scansummary-content' class='table table-bordered table-striped tablesorter'>";
+                            var table = "<table id='scansummary-content' class='table table-bordered table-striped tablesorter sf-browse-table'>";
                             table += "<thead><tr> <th>Type</th><th>Unique Data Elements</th> <th>Total Data Elements</th><th>Last Data Element</th></tr></thead><tbody>";
                             for (var i = 0; i < data.length; i++) {
-                                table += "<tr><td><a class='link' onClick='";
+                                table += "<tr><td data-label='Type' class='sf-browse-type'><a class='link' onClick='";
                                 table += "browseEventData(\"${id}\", \"" + escape(data[i][1]) + "\", \"" + data[i][0] + "\", \"full\");'>";
                                 table += data[i][1] + "</a></td>";
-                                table += "<td>" + data[i][4] + "</td>";
-                                table += "<td>" + data[i][3] + "</td>";
-                                table += "<td>" + data[i][2] + "</td>";
+                                table += "<td data-label='UDE'>" + data[i][4] + "</td>";
+                                table += "<td data-label='TDE'>" + data[i][3] + "</td>";
+                                table += "<td data-label='LDA'>" + data[i][2] + "</td>";
                             }
                             table += "</tbody></table>"
 
@@ -633,9 +675,9 @@
                             }
                             crumbs += "</ul>";
 
-                            var table = "<table id='scansummary-content' class='table table-bordered table-striped small tablesorter'>";
+                            var table = "<table id='scansummary-content' class='table table-bordered table-striped small tablesorter sf-event-table'>";
                             table += "<thead><tr>";
-                            table += "<th class='text-center'><input id='checkall' type='checkbox' onClick='switchSelectAll()'></th>";
+                            table += "<th class='text-center sf-event-checkbox'><input id='checkall' type='checkbox' onClick='switchSelectAll()'></th>";
                             table += "<th>Data Element</th></th>";
                             table += "<th>Source Data Element</th>";
                             table += "<th>Source Module</th>";
@@ -647,18 +689,18 @@
                                     continue;
                                 }
                                 table += "<tr>";
-                                table += "<td class='text-center'><input type='checkbox' id='cb_" + data[i][7] + "'>";
+                                table += "<td class='text-center sf-event-checkbox'><input type='checkbox' id='cb_" + data[i][7] + "'>";
                                 if (data[i][8] == "1") {
                                     table += "<br /><i class='glyphicon glyphicon-ban-circle' class='vertical-align-bottom' />";
                                 }
                                 table += "</td>";
-                                table += "<td><pre class='table-border-bg-inherit'>";
+                                table += "<td data-label='Data Element' class='sf-event-data'><pre class='table-border-bg-inherit'>";
                                 //table += "<a href='${docroot}/entityinfo?id=" + data[i][7] + "'>" + data[i][1] + "</a>";
                                 table += sf.replace_sfurltag(data[i][1]);
-                                table += "</pre></td><td><pre class='table-border-bg-inherit'>";
+                                table += "</pre></td><td data-label='Source'><pre class='table-border-bg-inherit'>";
                                 table += sf.replace_sfurltag(data[i][2]);
-                                table += "</pre></td><td><pre class='table-border-bg-inherit'>" + data[i][3];
-                                table += "</pre></td><td><pre class='table-border-bg-inherit'>" + data[i][0];
+                                table += "</pre></td><td data-label='Module'><pre class='table-border-bg-inherit'>" + data[i][3];
+                                table += "</pre></td><td data-label='Time'><pre class='table-border-bg-inherit'>" + data[i][0];
                                 table += "</pre></td>";
                                 table += "</tr>";
                             }
@@ -715,12 +757,12 @@
                             crumbs += fp + ")\" " + ch + "></input></div>";
                             crumbs += "</ul>";
 
-                            var table = "<table id='scansummary-content' class='table table-bordered table-striped small'>";
+                            var table = "<table id='scansummary-content' class='table table-bordered table-striped small sf-event-table'>";
                             table += "<thead><tr> <th>Unique Data Element</th><th>Occurrences</th></tr></thead><tbody>";
                             for (var i = 0; i < data.length; i++) {
-                                table += "<tr><td><pre class='table-border-bg-inherit'>";
+                                table += "<tr><td data-label='Element' class='sf-event-data'><pre class='table-border-bg-inherit'>";
                                 table += sf.replace_sfurltag(data[i][0]);
-                                table += "</pre></td><td>" + data[i][2] + "</td>";
+                                table += "</pre></td><td data-label='Occurrences'>" + data[i][2] + "</td>";
                                 table += "</tr>";
                             }
                             table += "</tbody></table>"

@@ -28,6 +28,8 @@
         } else {
             $("#selectors").show();
         }
+        // Reset scroll so one tab's scroll doesn't leak into another
+        $(".table-wrap").scrollTop(0);
     }
 
     function selectAll() {

@@ -1,57 +1,88 @@
 <%include file="HEADER.tmpl"/>
 <script src="${docroot}/static/js/spiderfoot.newscan.js"></script>
-<h2>New Scan</h2>
-<div style='padding-top: 20px'>
-<form class="form" action='${docroot}/startscan' method='POST'>
-<div class='col-sm-3' style='padding: 0'>
-    <label for="scanname">Scan Name</label>
-    <div class="input-group" style='padding-bottom: 10px'>
-        <input class='form-control' type="text" id="scanname" name="scanname" value="${scanname}" placeholder="The name of this scan.">
-    </div>
-    <label for="scantarget">Scan Target</label>
-    <div class="input-group">
-        <input class='form-control' type="text" value="${scantarget}" id="scantarget" name="scantarget" placeholder="The target of your scan.">
-    </div>
-</div>
-<div class='col-sm-9' style='font-size: 12px; padding: 0; padding-left: 10px'>
-    <div class='panel panel-default' style='background-color: #f7f7f7'>
-        <div class='panel-body' style='padding: 0; margin: 10px'>
-            <div class='row' style='padding-bottom: 5px'>
-                <div class='col-sm-12'>
-                <i class='glyphicon glyphicon-question-sign'></i>&nbsp;&nbsp;Your scan target may be one of the following. SpiderFoot will automatically detect the target type based on the format of your input:
-                </div>
-            </div>
-            <div class='row'>
-                <div class='col-sm-6'>
-                    <b>Domain Name</b>: e.g. <i>example.com</i><br><b>IPv4 Address</b>: e.g. <i>1.2.3.4</i><br><b>IPv6 Address</b>: e.g. <i>2606:4700:4700::1111</i><br><b>Hostname/Sub-domain</b>: e.g. <i>abc.example.com</i><br><b>Subnet</b>: e.g. <i>1.2.3.0/24</i><br><b>Bitcoin Address</b>: e.g. 1HesYJSP1QqcyPEjnQ9vzBL1wujruNGe7R
-                </div>
-                <div class='col-sm-6'><b>E-mail address</b>: e.g. <i>bob@example.com</i><br><b>Phone Number</b>: e.g. <i>+12345678901</i> (E.164 format)<br><b>Human Name</b>: e.g. <i>&quot;John Smith&quot;</i> (must be in quotes)<br><b>Username</b>: e.g. <i>&quot;jsmith2000&quot;</i> (must be in quotes)<br><b>Network ASN</b>: e.g. <i>1234</i>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-    <div class="control-group">
-        <ul class='nav nav-tabs'>
-        <li id='usetab' class="active"><a href='#'>By Use Case</a></li>
-        <li id='typetab'><a href='#'>By Required Data</a></li>
-        <li id='moduletab'><a href='#'>By Module</a></li>
-        <div class='btn-group-sm pull-right' role="group" id='selectors' style='display: none'>
-        <button id="btn-select-all" type="button" class="btn btn-info">Select All</button>&nbsp;&nbsp;
-        <button id="btn-deselect-all" type="button" class="btn btn-info">De-Select All</button>
-        </div>
-        </ul>
-        <table class="table table-striped table-condensed" id="usetable">
-            <tr><td style='width: 50px'><input type=radio name='usecase' value='all' id="usecase_all" checked></td><td>All</td><td><b>Get anything and everything about the target.</b><br><br>All SpiderFoot modules will be enabled (slow) but every possible piece of information about the target will be obtained and analysed.<br><br></td></tr>
-            <tr><td style='width: 50px'><input type=radio name='usecase' value='Footprint' id="usecase_footprint"></td><td>Footprint</td><td><b>Understand what information this target exposes to the Internet.</b><br><br>Gain an understanding about the target's network perimeter, associated identities and other information that is obtained through a lot of web crawling and search engine use.
-             <br><br></td></tr>
-            <tr><td style='width: 50px'><input type=radio name='usecase' value='Investigate' id="usecase_investigate"></td><td>Investigate</td><td><b>Best for when you suspect the target to be malicious but need more information.</b><br><br>Some basic footprinting will be performed in addition to querying of blacklists and other sources that may have information about your target's maliciousness.
-            <br><br></td></tr>
-            <tr><td style='width: 50px'><input type=radio name='usecase' value='Passive' id="usecase_passive"></td><td>Passive</td><td><b>When you don't want the target to even suspect they are being investigated.</b><br><br>As much information will be gathered without touching the target or their affiliates, therefore only modules that do not touch the target will be enabled.
+<!-- Wrapper: brain behind everything -->
+<div style="position:relative;min-height:500px;">
 
-        </td></tr>
-        </table>
+  <!-- Brain background (z-index: 0) -->
+  <div style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;overflow:hidden;background:radial-gradient(ellipse at 50% 40%, rgba(51,224,216,0.06), transparent 60%);">
+    <canvas id="brain-canvas" style="position:absolute;top:0;left:0;width:100%;height:100%;display:block;"></canvas>
+  </div>
+
+  <!-- Content on top (z-index: 1) -->
+  <div style="position:relative;z-index:1;">
+    <!-- Overlay text - top right, same level as inputs -->
+    <div style="position:absolute;top:0;right:0;text-align:right;pointer-events:none;z-index:2;padding:20px 24px;">
+      <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);letter-spacing:0.08em;margin-bottom:2px;">SPIDERFOOT OSINT ENGINE</div>
+      <div style="font-family:var(--font-display);font-size:20px;font-weight:600;color:var(--accent);text-shadow:0 0 30px var(--accent-glow);">Ready to scan</div>
+    </div>
+    <div class="page-head" style="margin-bottom:0;">
+      <h1>New Scan</h1>
+    </div>
+
+    <form class="form" action='${docroot}/startscan' method='POST'>
+
+<!-- Flex row: inputs + button on same line -->
+<div class="newscan-top-row">
+
+  <!-- Inputs -->
+  <div class="newscan-inputs">
+    <div>
+      <label for="scanname">Scan Name</label>
+      <input class='form-control' type="text" id="scanname" name="scanname" value="${scanname}" placeholder="The name of this scan." style="margin-bottom:12px;">
+
+      <label for="scantarget">Scan Target</label>
+      <input class='form-control' type="text" value="${scantarget}" id="scantarget" name="scantarget" placeholder="The target of your scan." style="margin-bottom:4px;">
+
+      <div style="margin-top:10px;padding:12px;border:1px solid var(--border-soft);border-radius:var(--radius-md);background:var(--bg-panel-2);font-size:12px;color:var(--text-secondary);line-height:1.7;">
+        <strong style="color:var(--accent);font-size:13px;">Supported target types</strong><br>
+        <b>Domain Name</b>: example.com<br>
+        <b>IPv4</b>: 1.2.3.4<br>
+        <b>IPv6</b>: 2606:4700:4700::1111<br>
+        <b>Hostname</b>: abc.example.com<br>
+        <b>Subnet</b>: 1.2.3.0/24<br>
+        <b>Bitcoin</b>: 1HesYJSP1QqcyPEjnQ9vzBL1wujruNGe7R<br>
+        <b>E-mail</b>: bob@example.com<br>
+        <b>Phone</b>: +12345678901 (E.164)<br>
+        <b>Human Name</b>: "John Smith"<br>
+        <b>Username</b>: "jsmith2000"<br>
+        <b>ASN</b>: 1234
+      </div>
+    </div>
+  </div>
+
+  <!-- Button -->
+  <div class="run-scan-row">
+    <input type=hidden id='modulelist' name='modulelist' value=''>
+    <input type=hidden id='typelist' name='typelist' value=''>
+    <button id="btn-run-scan" class="btn-run-scan">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+      Run Scan Now
+    </button>
+  </div>
+
+</div><!-- /newscan-top-row -->
+
+<div class="control-group">
+  <div class="tab-bar">
+    <ul class='nav nav-tabs'>
+      <li id='usetab' class="active"><a href='#'>By Use Case</a></li>
+      <li id='typetab'><a href='#'>By Required Data</a></li>
+      <li id='moduletab'><a href='#'>By Module</a></li>
+    </ul>
+    <div class="tab-selectors" role="group" id='selectors' style='display: none;'>
+      <button id="btn-select-all" type="button" class="btn btn-info btn-sm">Select All</button>
+      <button id="btn-deselect-all" type="button" class="btn btn-info btn-sm">De-Select All</button>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+  <table class="table table-striped table-condensed" id="usetable">
+    <tr><td style='width:50px'><input type=radio name='usecase' value='all' id="usecase_all" checked></td><td><strong>All</strong></td><td>Get anything and everything about the target. All SpiderFoot modules will be enabled (slow) but every possible piece of information will be obtained and analysed.</td></tr>
+    <tr><td><input type=radio name='usecase' value='Footprint' id="usecase_footprint"></td><td><strong>Footprint</strong></td><td>Understand what information this target exposes to the Internet. Gain an understanding about the target's network perimeter, associated identities and other information obtained through web crawling and search engine use.</td></tr>
+    <tr><td><input type=radio name='usecase' value='Investigate' id="usecase_investigate"></td><td><strong>Investigate</strong></td><td>Best for when you suspect the target to be malicious but need more information. Some basic footprinting will be performed in addition to querying of blacklists and other sources.</td></tr>
+    <tr><td><input type=radio name='usecase' value='Passive' id="usecase_passive"></td><td><strong>Passive</strong></td><td>When you don't want the target to even suspect they are being investigated. Only modules that do not touch the target will be enabled.</td></tr>
+  </table>
 
         <table class="table table-striped table-condensed" id="moduletable" style="display: none">
             <%
@@ -72,7 +103,7 @@
                 % endif
 
                 % if item != "sfp__stor_db" and item != "sfp__stor_stdout":
-                    <tr><td><input type=checkbox id="module_${item}" checked></td><td>${modules[item]['name']}${keyicon}</td><td>${modules[item]['descr']}</td></tr>
+                    <tr><td style="width:50px"><input type=checkbox id="module_${item}" checked></td><td>${modules[item]['name']}${keyicon}</td><td>${modules[item]['descr']}</td></tr>
                 % endif
             % endfor
         </table>
@@ -82,23 +113,101 @@
                 % if count % 2 == 0:
                     <tr>
                 % endif
-                <td><input type=checkbox id="type_${item[1]}" checked></td><td>${item[0]}</td>
+                <td style="width:50px"><input type=checkbox id="type_${item[1]}" checked></td><td>${item[0]}</td>
                 % if not count % 2 == 0:
                     </tr>
                 % endif
                 <% count = count + 1 %>
             % endfor
         </table>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <input type=hidden id='modulelist' name='modulelist' value=''>
-            <input type=hidden id='typelist' name='typelist' value=''>
-            <button id="btn-run-scan" class="btn btn-danger">Run Scan Now</button>
-        </div>
-    </div>
-</form>
+  </div>
+
 </div>
+</form>
+  </div>
+</div><!-- /wrapper -->
+
+<script>
+/* particle sphere: brain of points (responsive) */
+(function(){
+  var canvas = document.getElementById('brain-canvas');
+  if(!canvas) return;
+  var parent = canvas.parentElement;
+  var ctx = canvas.getContext('2d');
+  var ACCENT = '#33e0d8';
+  var N = 360;
+  var pts = [];
+  var t = 0;
+
+  function resize(){
+    var rect = parent.getBoundingClientRect();
+    canvas.width = Math.round(rect.width * window.devicePixelRatio);
+    canvas.height = Math.round(rect.height * window.devicePixelRatio);
+    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+  }
+  resize();
+
+  for(var i=0;i<N;i++){
+    var theta = Math.acos(2*Math.random()-1);
+    var phi = Math.random()*Math.PI*2;
+    var r = 145 + Math.random()*55;
+    var x = r*Math.sin(theta)*Math.cos(phi);
+    var y = r*Math.sin(theta)*Math.sin(phi)*0.9;
+    var z = r*Math.cos(theta);
+    pts.push({x:x,y:y,z:z, phase:Math.random()*Math.PI*2, speed:0.008+Math.random()*0.015, size:0.7+Math.random()*2.0});
+  }
+
+  function draw(){
+    t += 0.004;
+    var W = canvas.width / window.devicePixelRatio;
+    var H = canvas.height / window.devicePixelRatio;
+    var cx = W/2, cy = H/2;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    var grad = ctx.createRadialGradient(cx,cy,0,cx,cy,Math.min(W,H)*0.42);
+    grad.addColorStop(0,'rgba(51,224,216,0.12)');
+    grad.addColorStop(1,'rgba(51,224,216,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.arc(cx,cy,Math.min(W,H)*0.42,0,Math.PI*2); ctx.fill();
+
+    var maxR = Math.min(W,H) * 0.48;
+    var sorted = pts.map(function(p){
+      var rot = t*0.6;
+      var x2 = p.x*Math.cos(rot) - p.z*Math.sin(rot);
+      var z2 = p.x*Math.sin(rot) + p.z*Math.cos(rot);
+      var scale = 300/(300+z2);
+      var ratio = maxR / 150;
+      return {px: cx + x2*scale*ratio, py: cy + p.y*scale*ratio, z:z2, size:p.size, scale:scale, phase:p.phase};
+    }).sort(function(a,b){return a.z-b.z;});
+
+    for(var j=0;j<sorted.length;j++){
+      var p = sorted[j];
+      var tw = 0.5 + 0.5*Math.sin(p.phase + t*6);
+      var alpha = 0.3 + 0.7 * Math.min(1, (p.z+200)/400);
+
+      ctx.strokeStyle = 'rgba(51,224,216,' + (0.04*alpha) + ')';
+      ctx.lineWidth = 0.4;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(p.px, p.py);
+      ctx.stroke();
+
+      var sz = p.size * p.scale * (0.6 + 0.4*tw);
+      ctx.fillStyle = 'rgba(255,255,255,' + (0.5*alpha*tw) + ')';
+      ctx.shadowColor = ACCENT;
+      ctx.shadowBlur = sz * 6;
+      ctx.beginPath();
+      ctx.arc(p.px, p.py, Math.max(0.3, sz), 0, Math.PI*2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  window.addEventListener('resize', resize);
+})();
+</script>
 
 <script type='text/javascript'>
   if ("${selectedmods}" != "") {

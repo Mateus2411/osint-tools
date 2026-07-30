@@ -196,11 +196,11 @@ function showlisttable(types, filter, data) {
             filtered++;
             continue;
         }
-        table += "<tr><td class='text-center'><input type='checkbox' id='cb_" + data[i][0] + "'></td>"
-        table += "<td><a href=" + docroot + "/scaninfo?id=" + data[i][0] + ">" + data[i][1] + "</a></td>";
-        table += "<td>" + data[i][2] + "</td>";
-        table += "<td>" + data[i][3] + "</td>";
-        table += "<td>" + data[i][5] + "</td>";
+        table += "<tr><td class='text-center' data-label='Select'><input type='checkbox' id='cb_" + data[i][0] + "'></td>"
+        table += "<td data-label='Name'><a href=" + docroot + "/scaninfo?id=" + data[i][0] + ">" + data[i][1] + "</a></td>";
+        table += "<td data-label='Target'>" + data[i][2] + "</td>";
+        table += "<td data-label='Started' class='text-muted'>" + data[i][3] + "</td>";
+        table += "<td data-label='Finished' class='text-muted'>" + data[i][5] + "</td>";
 
         var statusy = "";
 
@@ -215,15 +215,15 @@ function showlisttable(types, filter, data) {
         } else {
             statusy = "alert-info";
         }
-        table += "<td class='text-center'><span class='badge " + statusy + "'>" + data[i][6] + "</span></td>";
-        table += "<td class='text-center'>" + data[i][7] + "</td>";
-        table += "<td class='text-center'>";
+        table += "<td class='text-center' data-label='Status'><span class='badge " + statusy + "'>" + data[i][6] + "</span></td>";
+        table += "<td class='text-center' data-label='Elements'>" + data[i][7] + "</td>";
+        table += "<td class='text-center' data-label='Correlations'>";
         table += "<span class='badge alert-danger'>" + data[i][8]['HIGH'] + "</span>";
         table += "<span class='badge alert-warning'>" + data[i][8]['MEDIUM'] + "</span>";
         table += "<span class='badge alert-info'>" + data[i][8]['LOW'] + "</span>";
         table += "<span class='badge alert-success'>" + data[i][8]['INFO'] + "</span>";
         table += "</td>";
-        table += "<td class='text-center'>";
+        table += "<td class='text-center' data-label='Actions'>";
         if (data[i][6] == "RUNNING" || data[i][6] == "STARTING" || data[i][6] == "STARTED" || data[i][6] == "INITIALIZING") {
             table += "<a rel='tooltip' title='Stop Scan' href='javascript:stopScan(\"" + data[i][0] + "\");'><i class='glyphicon glyphicon-stop text-muted'></i></a>";
         } else {
