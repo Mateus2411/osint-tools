@@ -476,7 +476,8 @@ def start_web_server(sfWebUiConfig: dict, sfConfig: dict, loggingQueue=None) -> 
     cherrypy.config.update({
         'log.screen': False,
         'server.socket_host': web_host,
-        'server.socket_port': int(web_port)
+        'server.socket_port': int(web_port),
+        'server.thread_pool': 20
     })
 
     log.info(f"Starting web server at {web_host}:{web_port} ...")

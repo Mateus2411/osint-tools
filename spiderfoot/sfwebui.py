@@ -961,6 +961,15 @@ class SpiderFootWebUi:
 
     @cherrypy.expose
     def index(self: 'SpiderFootWebUi') -> str:
+        """Show new scan page as home page.
+
+        Returns:
+            str: New scan page HTML
+        """
+        return self.newscan()
+
+    @cherrypy.expose
+    def scans(self: 'SpiderFootWebUi') -> str:
         """Show scan list page.
 
         Returns:

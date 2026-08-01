@@ -3,7 +3,7 @@
 <p align="center">
   <a href="https://www.spiderfoot.net/">
     <img src="https://www.spiderfoot.net/wp-content/themes/spiderfoot/img/spiderfoot-wide.png" alt="SpiderFoot">
-  </a>
+  </a> 
 </p>
 
 <p align="center">
