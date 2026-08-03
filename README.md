@@ -9,14 +9,7 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 
 ## 🛠️ Ferramentas Disponíveis
 
-### 1️⃣ [PhoneInfoga](./phoneinfoga_Windows_x86_64/) 📞
-**Ferramenta para investigar números de telefone**
-- **Site oficial**: https://github.com/sundowndev/phoneinfoga
-- **Função**: Obter informações detalhadas sobre números de telefone
-- **Dados coletados**: Operadora, localização, tipo de linha, validação
-- **Uso**: `./phoneinfoga.exe scan -n +5511999999999`
-
-### 2️⃣ [Holehe](./holohe/) 📧
+### 1️⃣ [Holehe](./holohe/) 📧
 **Ferramenta para descobrir contas associadas a e-mail**
 - **Repositório**: https://github.com/megadose/holehe
 - **Função**: Verificar contas em mais de 100 sites (Instagram, Twitter, etc)
@@ -24,7 +17,7 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Instalação**: `pip install holehe`
 - **Uso**: `holehe email@email.com`
 
-### 3️⃣ [SpiderFoot](./spiderfoot/) 🕷️
+### 2️⃣ [SpiderFoot](./spiderfoot/) 🕷️
 **Ferramenta extremamente poderosa de OSINT automático**
 - **Repositório**: https://github.com/smicallef/spiderfoot
 - **Função**: Investigação completa e automática
@@ -32,7 +25,7 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Interface**: Web + CLI
 - **Uso**: `py -3.14 sf.py -l 127.0.0.1:5001`
 
-### 4️⃣ [theHarvester](./theHarvester/) 🌾
+### 3️⃣ [theHarvester](./theHarvester/) 🌾
 **Ferramenta clássica para coleta de informações OSINT**
 - **Repositório**: https://github.com/laramies/theHarvester
 - **Função**: Coleta de emails, subdomínios, hosts, IPs de múltiplas fontes
@@ -40,16 +33,51 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Instalação**: `pip install theHarvester`
 - **Uso**: `theHarvester -d dominio.com -b google,bing`
 
+### 4️⃣ [Mr.Holmes](./Mr.Holmes/) 🔍
+**Ferramenta de coleta de informações (OSINT) com interface gráfica**
+- **Repositório**: https://github.com/Lucksi/Mr.Holmes
+- **Função**: Coletar informações sobre domínios, usernames e telefones via fontes públicas
+- **Extras**: Google Dorks, proxies anônimos, WhoIS API, email lookup silencioso, mapas e gráficos interativos, hipóteses sobre o alvo, exportação PDF, transferência via QR Code
+- **Interface**: GUI (dark/light/high-contrast) + CLI
+- **Instalação (Windows)**: `git clone` + `Install.cmd`
+- **Uso**: `python MrHolmes.py` (ou `Launchers/Win_Launcher.exe`)
+- **Config**: `Configuration/Configuration.ini` (WhoIS API: https://whois.whoisxmlapi.com)
+
+### 5️⃣ [RedTiger-Tools](./RedTiger-Tools/) 🐯
+**Plataforma multifunção de pentest + OSINT com sistema de plugins**
+- **Repositório**: https://github.com/loxy0devlp/RedTiger-Tools
+- **Função**: Centralizar pentest e OSINT numa ferramenta só (CLI + interface interativa)
+- **Pentest**: scanner avançado, scanner de vulnerabilidades, port scanner, crawler de URLs, ping contínuo, host discovery
+- **OSINT**: Google dorks, tracker de carteira crypto, username/email/IP/telefone lookup, Instagram lookup
+- **Extras**: scanner/deletor de metadados, cloner de sites, plugins em Python
+- **Instalação**: `python setup.py`
+- **Uso**: `python redtiger.py` (ex: `python redtiger.py -pnl -p "+551****9999"`)
+
 ---
 
 ## 📋 Guia de Instalação Rápida
 
-### PhoneInfoga
+### Mr.Holmes
 ```bash
-# 1. Baixar phoneinfoga_Windows_x86_64.tar.gz
-# 2. Extrair na pasta: C:\osint\phoneinfoga
-# 3. Executar:
-./phoneinfoga.exe scan -n +5511999999999
+# 1. Clonar o repositório:
+git clone https://github.com/Lucksi/Mr.Holmes
+# 2. Entrar na pasta e instalar:
+cd Mr.Holmes
+Install.cmd
+# 3. Rodar:
+python MrHolmes.py
+```
+
+### RedTiger-Tools
+```bash
+# 1. Clonar o repositório:
+git clone https://github.com/loxy0devlp/RedTiger-Tools
+# 2. Entrar na pasta:
+cd RedTiger-Tools
+# 3. Instalar dependências:
+python setup.py
+# 4. Rodar:
+python redtiger.py
 ```
 
 ### Holehe
@@ -93,10 +121,11 @@ theHarvester -d empresa.com -b all -f resultados
 
 | Ferramenta | Melhor uso | Tipo de dados |
 |------------|------------|---------------|
-| **PhoneInfoga** | Investigar telefones | Operadora, localização, validação |
 | **Holehe** | Descobrir contas com email | Redes sociais, plataformas online |
 | **SpiderFoot** | OSINT automático | Tudo: domínios, IPs, emails, vulnerabilidades |
 | **theHarvester** | Coleta de informações | Emails, subdomínios, hosts de múltiplas fontes |
+| **Mr.Holmes** | Investigação GUI completa | Domínios, usernames, telefones, dorks, gráficos/mapas |
+| **RedTiger-Tools** | Pentest + OSINT all-in-one | Scanners, dorks, wallets crypto, telefone/IP/email/Instagram |
 
 ---
 
@@ -108,7 +137,7 @@ theHarvester -d empresa.com -b all -f resultados
 holehe pessoa@email.com
 
 # 2. Investigar telefone (se encontrado)
-./phoneinfoga.exe scan -n +5511999999999
+python redtiger.py -pnl -p "+551****9999"
 
 # 3. OSINT completo no domínio do email
 # SpiderFoot: Target = email.com, Type = Domain
@@ -123,7 +152,7 @@ holehe pessoa@email.com
 holehe email@empresa.com
 
 # 3. Investigar telefones descobertos
-./phoneinfoga.exe scan -n +5511999999999
+python redtiger.py -pnl -p "+551****9999"
 ```
 
 ### 3. Investigação de Domínio/Site
@@ -135,7 +164,7 @@ holehe email@empresa.com
 holehe admin@site.com
 
 # 3. Investigar IPs e telefones descobertos
-./phoneinfoga.exe scan -n +numero_encontrado
+python redtiger.py -il -i <ip_encontrado> && python redtiger.py -pnl -p <numero_encontrado>
 ```
 
 ---
@@ -195,7 +224,6 @@ pip install lxml
 ### Firewall/Antivírus bloqueando
 ```bash
 # Adicionar exceções para:
-# - phoneinfoga.exe
 # - Python.exe
 # - Pasta do projeto
 ```
@@ -205,15 +233,16 @@ pip install lxml
 ## 📚 Recursos Adicionais
 
 ### Documentação Oficial
-- **PhoneInfoga**: https://sundowndev.github.io/phoneinfoga/
 - **Holehe**: https://github.com/megadose/holehe/wiki
+- **Mr.Holmes**: https://github.com/Lucksi/Mr.Holmes
+- **RedTiger-Tools**: https://github.com/loxy0devlp/RedTiger-Tools
 - **SpiderFoot**: https://www.spiderfoot.net/documentation
 - **theHarvester**: https://github.com/laramies/theHarvester/wiki
 
 ### Comunidades
 - **Discord SpiderFoot**: https://discord.gg/vyvztrG
 - **Reddit OSINT**: r/OSINT
-- **Twitter**: @spiderfoot, @phoneinfoga
+- **Twitter**: @spiderfoot
 
 ### Cursos e Treinamentos
 - **OSINT Framework**: https://osintframework.com/
@@ -236,7 +265,7 @@ echo "=== Investigando Email ==="
 holehe $TARGET_EMAIL > holehe_results.txt
 
 echo "=== Investigando Telefone ==="
-./phoneinfoga.exe scan -n $TARGET_PHONE > phone_results.txt
+python redtiger.py -pnl -p "$TARGET_PHONE" > phone_results.txt
 
 echo "=== OSINT Automático ==="
 # Usar SpiderFoot via CLI ou interface web
@@ -245,7 +274,7 @@ echo "=== OSINT Automático ==="
 ### Integração de Dados
 ```bash
 # Combinar resultados em formato JSON
-jq -s '.[0] + .[1]' holehe.json phoneinfoga.json > combined.json
+jq -s '.[0] + .[1]' holehe.json redtiger_output.json > combined.json
 ```
 
 ### Backup e Segurança
@@ -263,9 +292,10 @@ tar -czf backup_$(date +%Y%m%d).tar.gz *.json *.txt
 
 Este conjunto de ferramentas OSINT oferece capacidades abrangentes para investigação digital:
 
-- **PhoneInfoga**: Especialista em números de telefone
-- **Holehe**: Expert em descoberta de contas por email  
+- **Holehe**: Expert em descoberta de contas por email
 - **SpiderFoot**: Plataforma completa de OSINT automático
 - **theHarvester**: Coleta de informações de múltiplas fontes
+- **Mr.Holmes**: Investigação GUI com dorks, mapas e gráficos
+- **RedTiger-Tools**: Suite de pentest + OSINT com plugins
 
 **Use sempre de forma ética, legal e responsável!** 🕵️‍♂️🔍
