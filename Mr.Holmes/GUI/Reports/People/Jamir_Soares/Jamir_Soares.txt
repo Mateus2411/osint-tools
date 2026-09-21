@@ -1,0 +1,10 @@
+SCANNING EXECUTED ON:
+Date: 06/08/2026 00:42:25
+--------------------------------
+SHOWING TWITTER RESULTS FOR: Jamir Soares
+--------------------------------
+SHOWING GITHUB RESULTS FOR: Jamir Soares
+
+USER FOUND: JamirSoares
+PROFILE-PIC: https://avatars.githubusercontent.com/u/81266345?v=4
+LINK: https://github.com/JamirSoares

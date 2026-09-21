@@ -1,0 +1,15 @@
+SCANNING EXECUTED ON:
+Date: 15/08/2026 21:11:40
+IP: 147.79.79.63
+NATION: United States
+NATION-CODE: US
+REGION-CODE: MA
+REGION-NAME: Massachusetts
+CITY: Boston
+TIMEZONE: America/New_York
+ISP: Hostinger International Limited
+ORG: Hostinger
+AS: AS47583 Hostinger International Limited
+LAT: 42.3602
+LONG: -71.0594
+ZIP/POSTAL-CODE: 02112
