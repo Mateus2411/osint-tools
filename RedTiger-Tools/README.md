@@ -197,6 +197,56 @@ Notations:
   *  : Required
 ```
 
+<h2>🔧 Erros Comuns & Soluções:</h2>
+
+<h3>Python não encontrado</h3>
+<pre>
+# Verificar se Python está instalado:
+python --version
+python3 --version
+
+# Se não existir, baixar em: https://www.python.org/downloads/
+# ⚠️ Marcar "Add Python to PATH" durante instalação (Windows)
+</pre>
+
+<h3>Erro de dependências na instalação</h3>
+<pre>
+# Rodar o setup como Administrador (Windows) ou com sudo (Linux)
+python setup.py
+
+# Se persistir, instalar manualmente:
+pip install -r requirements.txt
+</pre>
+
+<h3>Erro de permissão no Linux</h3>
+<pre>
+# Usar sudo para instalação:
+sudo python3 setup.py
+sudo python3 redtiger.py
+</pre>
+
+<h3>Module not found</h3>
+<pre>
+# Reinstalar dependências:
+pip install -r requirements.txt --force-reinstall
+</pre>
+
+<h3>Porta já em uso</h3>
+<pre>
+# Fechar processo anterior:
+# Windows: netstat -ano | findstr :PORTA && taskkill /PID &lt;PID&gt; /F
+# Linux: lsof -i :PORTA && kill &lt;PID&gt;
+</pre>
+
+<h3>Firewall/Antivírus bloqueando</h3>
+<pre>
+# Adicionar exceções para:
+# - python.exe
+# - A pasta do projeto
+</pre>
+
+---
+
 <h2>👨‍💻 Credits:</h2>
 
 <ul>

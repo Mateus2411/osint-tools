@@ -1,61 +1,278 @@
 # GAMKERS-DDOS
 
-Distributed Denial Of Service (DDoS) attacks are a subclass of denial of service (DoS) attacks. A DDoS attack involves multiple connected online devices, collectively known as a botnet, which are used to overwhelm a target website with fake traffic.
+Ferramenta de teste de stress UDP multithread otimizada para Python 3.
 
+> ⚠️ **APENAS PARA FINS EDUCACIONAIS / TESTES AUTORIZADOS**
+> Use apenas em localhost, laboratório próprio ou infraestrutura com permissão explícita.
+> Ataque sem autorização é **ILEGAL**.
 
-Note: THIS TOOL IS JUST ONLY FOR EDUCATIONAL PURPOSE..GIVING DDOS ATTACKs WITHOUT SITE OWNER'S PERMISSION IS ILLEGAL.. SO USE IT AT YOUR OWN RISK.. WE'LL BE NOT RESPONSIBLE FOR ANY TYPES OF MISISSUES!!!
+---
 
+## 📋 Índice
 
-How To Install GAMKERS-DDOS In Termux
-The Tool Installation Process Is Very Easy.. Just Open Your Termux & Type This Provided Commands!!
+- [Sobre](#-sobre)
+- [Pré-requisitos](#-pré-requisitos)
+- [Instalação](#-instalação)
+- [Como Usar](#-como-usar)
+- [Parâmetros](#parâmetros)
+- [Erros Comuns & Soluções](#-erros-comuns--soluções)
+- [Dicas de Performance](#-dicas-de-performance)
+- [Considerações Legais](#-considerações-legais)
 
-$ apt update && apt upgrade
+---
 
-$ pkg install python
+## 📋 Sobre
 
-$ pkg install python2
+O GAMKERS-DDOS é uma ferramenta de teste de stress UDP com as seguintes características:
 
-$ pkg install git
+- **Multithread**: socket próprio por thread para máximo throughput
+- **Sem print por pacote**: ~35x mais rápido que versões legadas
+- **CLI via argparse**: configuração fácil de portas, threads, payload e duração
+- **Tratamento de Windows**: desabilita WSAECONNRESET para manter throughput alto
+- **Reporter de taxa**: mostra pps (pacotes por segundo) em tempo real
 
-$ pkg install figlet
+---
 
-$ git clone https://github.com/gamkers/GAMKERS-DDOS.git
+## 🔧 Pré-requisitos
 
-$ cd GAMKERS-DDOS
+- **Python 3.6+** (recomendado: 3.10+)
+- **pip** (gerenciador de pacotes do Python)
+- Não precisa de bibliotecas externas — usa apenas a stdlib
 
-$ chmod +x GAMKERS-DDOS.py
+---
 
-$ python2 GAMKERS-DDOS.py
+## 🚀 Instalação
 
+### Método 1: Dentro do repositório OSINT
 
-To Run (Python 3)
+```bash
+cd GAMKERS-DDOS
+```
 
-$ cd GAMKERS-DDOS
+Pronto — o script é dependência zero, só precisa do Python.
 
-$ python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10
+### Método 2: Clonar separadamente
 
-Opcoes:
-  host              IP ou hostname do alvo (obrigatorio)
-  -p, --port        porta inicial do ciclo (default 80)
-  -e, --end-port    porta final do ciclo (default 65535)
-  -t, --threads     numero de threads (default 4; medido: 2-4 e o sweet spot)
-  -d, --duration    duracao em segundos; 0 = infinito (default 0)
-  -q, --quiet       esconde o reporter de taxa (pps)
-  -s, --size        tamanho do payload em bytes (default 1490; use 64-128 pra mais pps)
+```bash
+git clone https://github.com/Mateus2411/osint-tools.git
+cd osint-tools/GAMKERS-DDOS
+```
 
-Versao otimizada: sem print por pacote (~35x mais rapido), sem sleeps
-teatrais, socket por thread, CLI via argparse. Limite real e a banda de
-upload da sua conexao, nao o script.
+### Verificar que funciona
 
-Dica de pps: cada pacote de 1490 bytes custa ~11.9 kbit na rede. Com
-~12 Mbps de upload o teto e ~1000 pps. Reduzindo o payload pra 64 bytes
-(92 bytes no fio), a MESMA banda vira ~16k pps — 16x mais pacotes por
-segundo pra saturar firewall/CPU do alvo. Ex.: -s 64.
+```bash
+python GAMKERS-DDOS.py --help
+```
 
+---
 
-Your Tool Install & Setup Done!!..Now Go To Google & Search`Website IP Finder`Now Open The 1st Wesite & Place Your Target Website Url e.g. www.biribaba.com..
+## 🎯 Como Usar
 
+### Teste básico (localhost)
 
-After Getting The Website IP , Copy The IP & Come To The Termux.. Now Paste The Target Website IP On `Ip Target:` & Give The Port Number `8080`
+```bash
+python GAMKERS-DDOS.py 127.0.0.1
+```
 
-Booom!! Your Ddos Attack Had Been Started...
+### Com portas e duração específicas
+
+```bash
+python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10
+```
+
+Isso envia pacotes UDP para as portas 80-65535, usando 4 threads, por 10 segundos.
+
+### Múltiplas threads com payload pequeno (mais pps)
+
+```bash
+python GAMKERS-DDOS.py 127.0.0.1 -p 9 -t 32 -s 64
+```
+
+### Modo silencioso (sem reporter de taxa)
+
+```bash
+python GAMKERS-DDOS.py 127.0.0.1 -q -d 5
+```
+
+---
+
+## ⚙️ Parâmetros
+
+| Parâmetro | Descrição | Padrão |
+|-----------|-----------|--------|
+| `host` | IP ou hostname do alvo (**obrigatório**) | — |
+| `-p, --port` | Porta inicial do ciclo | 80 |
+| `-e, --end-port` | Porta final do ciclo | 65535 |
+| `-t, --threads` | Número de threads | 4 |
+| `-d, --duration` | Duração em segundos (0 = infinito) | 0 |
+| `-s, --size` | Tamanho do payload em bytes | 1490 |
+| `-q, --quiet` | Esconde o reporter de taxa | false |
+
+### Exemplos de combinação
+
+```bash
+# Teste rápido: 5 segundos, 8 threads
+python GAMKERS-DDOS.py 127.0.0.1 -t 8 -d 5
+
+# Porta específica com payload mínimo
+python GAMKERS-DDOS.py 127.0.0.1 -p 443 -e 443 -s 64 -d 3
+
+# Range de portas específico
+python GAMKERS-DDOS.py 127.0.0.1 -p 8000 -e 9000 -t 16 -d 20
+```
+
+---
+
+## 🔧 Erros Comuns & Soluções
+
+### `python: command not found`
+
+**Causa:** Python não está instalado ou não está no PATH.
+
+**Solução:**
+```bash
+# Verificar se existe
+python --version
+py --version
+
+# Se não existir, baixar em: https://www.python.org/downloads/
+# ⚠️ Marcar "Add Python to PATH" durante instalação (Windows)
+```
+
+### `Permission denied` / `Access denied`
+
+**Causa:** No Windows, o firewall ou antivírus bloqueia o script.
+
+**Solução:**
+```
+1. Execute o terminal como Administrador
+2. Adicione exceção no firewall/antivírus para:
+   - python.exe
+   - A pasta do projeto
+```
+
+### `OSError: [Errno 10054]` (Windows)
+
+**Causa:** O alvo responde com ICMP Unreachable, envenenando o socket UDP.
+
+**Solução:** Esse erro é **tratado automaticamente** pelo script (recria o socket). Se persistir, reduza o número de threads:
+```bash
+python GAMKERS-DDOS.py 127.0.0.1 -t 2
+```
+
+### `socket.gaierror: [Errno 8] nodename nor servname provided`
+
+**Causa:** Hostname não resolveu.
+
+**Solução:**
+```bash
+# Usar IP direto em vez de hostname
+# Descobrir o IP primeiro:
+nslookup exemplo.com
+ping exemplo.com
+```
+
+### `Portas inválidas (1-65535, inicio <= fim)`
+
+**Causa:** Porta fora do range ou porta inicial maior que final.
+
+**Solução:**
+```bash
+# Porta inicial deve ser <= porta final, ambas entre 1 e 65535
+python GAMKERS-DDOS.py 127.0.0.1 -p 1 -e 65535
+```
+
+### `Payload inválido (1-65507 bytes)`
+
+**Causa:** Tamanho do payload fora do limite UDP.
+
+**Solução:**
+```bash
+# Limite: 1 a 65507 bytes
+python GAMKERS-DDOS.py 127.0.0.1 -s 64   # mínimo eficiente
+python GAMKERS-DDOS.py 127.0.0.1 -s 65507 # máximo teórico
+```
+
+### Alta CPU / PC trava
+
+**Causa:** Muitas threads com payload grande consomem muita CPU.
+
+**Solução:**
+```bash
+# Reduza threads e/ou duração
+python GAMKERS-DDOS.py 127.0.0.1 -t 2 -d 5
+
+# Ou use payload menor (menos bytes por pacote = menos CPU)
+python GAMKERS-DDOS.py 127.0.0.1 -s 64 -t 4 -d 10
+```
+
+### Resultado mostra 0 pacotes
+
+**Causa:** Alvo inacessível, firewall bloqueando, ou duração muito curta.
+
+**Solução:**
+```bash
+# Teste primeiro no localhost
+python GAMKERS-DDOS.py 127.0.0.1 -p 9 -t 4 -d 5
+
+# Se funcionar no localhost mas não no alvo:
+# - Verifique se o alvo está acessível: ping <ip>
+# - Verifique se a porta está aberta: telnet <ip> <porta>
+# - Verifique o firewall local
+```
+
+---
+
+## 💡 Dicas de Performance
+
+### PPS vs Payload
+
+| Payload | Bytes no fio | PPS (~12 Mbps upload) |
+|---------|-------------|----------------------|
+| 1490 | ~1514 | ~1.000 |
+| 512 | ~536 | ~2.900 |
+| 128 | ~152 | ~10.000 |
+| 64 | ~88 | ~16.000 |
+
+> Cada pacote de 1490 bytes custa ~11.9 kbit na rede.
+> Reduzir o payload pra 64 bytes resulta em **~16x mais pacotes/segundo**.
+
+### Threads
+
+- **2 threads**: ideal para loopback (localhost)
+- **4 threads**: sweet spot para rede real
+- **8-16 threads**: use com cuidado — pode saturar a CPU
+
+### Otimizações aplicadas nesta versão
+
+1. **Socket por thread** — evita contenção de lock no socket
+2. **Sem print por pacote** — ~35x mais rápido que versões legadas
+3. **Sync a cada 500 pacotes** — minimiza overhead de lock
+4. **Reporter em thread separada** — não bloqueia o loop de envio
+5. **Tratamento de WSAECONNRESET** — mantém throughput no Windows
+
+---
+
+## ⚖️ Considerações Legais
+
+### ✅ Uso Permitido
+- Testes no **próprio computador** (localhost)
+- Laboratórios de segurança com infraestrutura dedicada
+- Pentest **autorizado** por escrito
+- Pesquisa acadêmica e educacional
+
+### ❌ Uso Proibido
+- Ataques a sistemas de terceiros sem autorização
+- Qualquer uso que viole leis locais ou internacionais
+- DDoS contra sites, serviços ou infraestrutura
+
+> **Responsabilidade:** O uso desta ferramenta é de inteira responsabilidade do usuário.
+> Os desenvolvedores não se responsabilizam por danos causados por uso indevido.
+
+---
+
+## 📚 Links
+
+- **Repositório**: https://github.com/Mateus2411/osint-tools
+- **Autor original**: GAMKERS (template base)
+- **Otimizado por**: Mateus2411

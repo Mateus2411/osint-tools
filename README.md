@@ -43,7 +43,16 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Uso**: `python MrHolmes.py` (ou `Launchers/Win_Launcher.exe`)
 - **Config**: `Configuration/Configuration.ini` (WhoIS API: https://whois.whoisxmlapi.com)
 
-### 5️⃣ [RedTiger-Tools](./RedTiger-Tools/) 🐯
+### 5️⃣ [GAMKERS-DDOS](./GAMKERS-DDOS/) ⚡
+**Ferramenta de teste de stress UDP multithread otimizada**
+- **Repositório**: https://github.com/Mateus2411/osint-tools
+- **Função**: Teste de stress/denial com pacotes UDP multithread
+- **Linguagem**: Python 3 (dependência zero — só stdlib)
+- **Otimizações**: socket por thread, sem print por pacote (~35x mais rápido), reporter de pps em tempo real
+- **Uso**: `python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10`
+- **⚠️ Apenas para testes autorizados / localhost**
+
+### 6️⃣ [RedTiger-Tools](./RedTiger-Tools/) 🐯
 **Plataforma multifunção de pentest + OSINT com sistema de plugins**
 - **Repositório**: https://github.com/loxy0devlp/RedTiger-Tools
 - **Função**: Centralizar pentest e OSINT numa ferramenta só (CLI + interface interativa)
@@ -115,6 +124,14 @@ theHarvester -d alvo.com -b google,bing,dnsdumpster
 theHarvester -d empresa.com -b all -f resultados
 ```
 
+### GAMKERS-DDOS
+```bash
+# 1. Entrar na pasta:
+cd GAMKERS-DDOS
+# 2. Rodar (dependência zero, só precisa de Python 3):
+python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10
+```
+
 ---
 
 ## 🧠 O que cada ferramenta faz melhor
@@ -125,6 +142,7 @@ theHarvester -d empresa.com -b all -f resultados
 | **SpiderFoot** | OSINT automático | Tudo: domínios, IPs, emails, vulnerabilidades |
 | **theHarvester** | Coleta de informações | Emails, subdomínios, hosts de múltiplas fontes |
 | **Mr.Holmes** | Investigação GUI completa | Domínios, usernames, telefones, dorks, gráficos/mapas |
+| **GAMKERS-DDOS** | Teste de stress UDP | Pacotes UDP multithread, pps, payload configurável |
 | **RedTiger-Tools** | Pentest + OSINT all-in-one | Scanners, dorks, wallets crypto, telefone/IP/email/Instagram |
 
 ---
@@ -165,6 +183,18 @@ holehe admin@site.com
 
 # 3. Investigar IPs e telefones descobertos
 python redtiger.py -il -i <ip_encontrado> && python redtiger.py -pnl -p <numero_encontrado>
+```
+
+### 4. Teste de Stress (apenas autorizado)
+```bash
+# 1. Resolver IP do alvo
+nslookup alvo.com
+
+# 2. Teste no localhost primeiro
+python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10
+
+# 3. Payload menor = mais pps
+python GAMKERS-DDOS.py 127.0.0.1 -s 64 -t 8 -d 5
 ```
 
 ---

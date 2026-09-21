@@ -363,6 +363,57 @@ edit Language.json
 <hr>
 <br>
 
+# 🔧 Erros Comuns & Soluções
+
+### Python não encontrado
+```bash
+# Verificar se Python está instalado
+python --version
+python3 --version
+
+# Se não existir, baixar em: https://www.python.org/downloads/
+# ⚠️ Marcar "Add Python to PATH" durante instalação (Windows)
+```
+
+### Erro de dependências na instalação
+```bash
+# Windows: rodar Install.cmd como Administrador
+# Linux/Mac: rodar install.sh com sudo
+
+# Se persistir, instalar manualmente:
+pip install -r requirements.txt
+```
+
+### PHP não encontrado (Windows)
+```bash
+# O Mr.Holmes precisa de PHP para certas funcionalidades
+# Baixar em: https://windows.php.net/download/
+# ⚠️ Marcar "Add PHP to PATH" durante instalação
+```
+
+### Erro de permissão no Linux/Mac
+```bash
+# Dar permissão de execução
+chmod +x install.sh
+sudo bash install.sh
+```
+
+### Erro de portas em uso
+```bash
+# Se a porta já estiver em uso, usar outra
+# Ou fechar o processo anterior:
+# Windows: netstat -ano | findstr :5000 && taskkill /PID <PID> /F
+# Linux: lsof -i :5000 && kill <PID>
+```
+
+### Erro de WhoIS API
+```bash
+# Verificar se a API key está configurada em:
+# Configuration/Configuration.ini
+# Obter chave em: https://whois.whoisxmlapi.com
+```
+
+---
 
 ## <p align = center> STARGAZERS OVER TIME 
 
