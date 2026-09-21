@@ -1,5 +1,9 @@
 # GAMKERS-DDOS
 
+<p align="center">
+  <b>🇧🇷 Português</b> | <a href="./README.en.md">🇬🇧 English</a>
+</p>
+
 Ferramenta de teste de stress UDP multithread otimizada para Python 3.
 
 > ⚠️ **APENAS PARA FINS EDUCACIONAIS / TESTES AUTORIZADOS**

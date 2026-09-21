@@ -1,5 +1,9 @@
 # Ferramentas de OSINT - Guia Completo
 
+<p align="center">
+  <a href="./README.en.md">🇬🇧 English</a> | <b>🇧🇷 Português</b>
+</p>
+
 <sub style="color:gray;">
 Todas as ferramentas disponibilizadas devem ser utilizadas de forma ética e responsável.
 O uso indevido para comprometer a segurança ou privacidade de terceiros não é recomendado.
