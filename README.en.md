@@ -1,4 +1,4 @@
-# OSINT Tools - Complete Guide
+# Global-Tools - Complete Guide (OSINT + Hacking)
 
 <p align="center">
   <a href="./README.md">🇧🇷 Português</a> | <b>🇬🇧 English</b>
@@ -11,9 +11,28 @@ Misuse to compromise the security or privacy of third parties is not recommended
 
 ---
 
+## 📁 Project Structure
+
+```
+Global-Tools/
+├── 📂 osint/            # OSINT tools
+│   ├── holohe/          # Account discovery by email
+│   ├── spiderfoot/      # Automated OSINT
+│   ├── theHarvester/    # Email/subdomain gathering
+│   └── Mr.Holmes/       # GUI investigation
+├── 📂 hacking/          # Pentest/hacking tools
+│   ├── GAMKERS-DDOS/    # UDP stress testing
+│   └── RedTiger-Tools/  # Pentest + OSINT all-in-one
+├── OSINT-REPOS.md       # OSINT/pentest repository list
+├── README.md            # This guide (PT)
+└── README.en.md         # This guide (EN)
+```
+
+---
+
 ## 🛠️ Available Tools
 
-### 1️⃣ [Holehe](./holohe/) 📧
+### 1️⃣ [Holehe](./osint/holohe/) 📧
 **Tool to discover accounts associated with an email**
 - **Repository**: https://github.com/megadose/holehe
 - **Function**: Check accounts on 100+ sites (Instagram, Twitter, etc)
@@ -21,7 +40,7 @@ Misuse to compromise the security or privacy of third parties is not recommended
 - **Install**: `pip install holehe`
 - **Usage**: `holehe email@email.com`
 
-### 2️⃣ [SpiderFoot](./spiderfoot/) 🕷️
+### 2️⃣ [SpiderFoot](./osint/spiderfoot/) 🕷️
 **Extremely powerful automated OSINT tool**
 - **Repository**: https://github.com/smicallef/spiderfoot
 - **Function**: Complete and automated investigation
@@ -29,7 +48,7 @@ Misuse to compromise the security or privacy of third parties is not recommended
 - **Interface**: Web + CLI
 - **Usage**: `py -3.14 sf.py -l 127.0.0.1:5001`
 
-### 3️⃣ [theHarvester](./theHarvester/) 🌾
+### 3️⃣ [theHarvester](./osint/theHarvester/) 🌾
 **Classic OSINT information gathering tool**
 - **Repository**: https://github.com/laramies/theHarvester
 - **Function**: Collect emails, subdomains, hosts, IPs from multiple sources
@@ -37,7 +56,7 @@ Misuse to compromise the security or privacy of third parties is not recommended
 - **Install**: `pip install theHarvester`
 - **Usage**: `theHarvester -d domain.com -b google,bing`
 
-### 4️⃣ [Mr.Holmes](./Mr.Holmes/) 🔍
+### 4️⃣ [Mr.Holmes](./osint/Mr.Holmes/) 🔍
 **OSINT information gathering tool with GUI**
 - **Repository**: https://github.com/Lucksi/Mr.Holmes
 - **Function**: Gather information on domains, usernames and phone numbers via public sources
@@ -47,7 +66,7 @@ Misuse to compromise the security or privacy of third parties is not recommended
 - **Usage**: `python MrHolmes.py` (or `Launchers/Win_Launcher.exe`)
 - **Config**: `Configuration/Configuration.ini` (WhoIS API: https://whois.whoisxmlapi.com)
 
-### 5️⃣ [GAMKERS-DDOS](./GAMKERS-DDOS/) ⚡
+### 5️⃣ [GAMKERS-DDOS](./hacking/GAMKERS-DDOS/) ⚡
 **Optimized multithreaded UDP stress testing tool**
 - **Repository**: https://github.com/Mateus2411/osint-tools
 - **Function**: UDP stress/denial testing with multithreaded packets
@@ -56,7 +75,7 @@ Misuse to compromise the security or privacy of third parties is not recommended
 - **Usage**: `python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10`
 - **⚠️ Authorized testing / localhost only**
 
-### 6️⃣ [RedTiger-Tools](./RedTiger-Tools/) 🐯
+### 6️⃣ [RedTiger-Tools](./hacking/RedTiger-Tools/) 🐯
 **Multifunction pentest + OSINT platform with plugin system**
 - **Repository**: https://github.com/loxy0devlp/RedTiger-Tools
 - **Function**: Centralize pentest and OSINT in one tool (CLI + interactive interface)
@@ -75,7 +94,7 @@ Misuse to compromise the security or privacy of third parties is not recommended
 # 1. Clone the repository:
 git clone https://github.com/Lucksi/Mr.Holmes
 # 2. Enter folder and install:
-cd Mr.Holmes
+cd osint/Mr.Holmes
 Install.cmd
 # 3. Run:
 python MrHolmes.py
@@ -86,7 +105,7 @@ python MrHolmes.py
 # 1. Clone the repository:
 git clone https://github.com/loxy0devlp/RedTiger-Tools
 # 2. Enter folder:
-cd RedTiger-Tools
+cd hacking/RedTiger-Tools
 # 3. Install dependencies:
 python setup.py
 # 4. Run:
@@ -105,11 +124,11 @@ holehe email@email.com
 
 ### SpiderFoot
 ```bash
-# 1. Enter folder: C:\osint
+# 1. Enter folder: C:\Global-Tools
 # 2. Clone:
 git clone https://github.com/smicallef/spiderfoot
 # 3. Enter folder:
-cd spiderfoot
+cd osint/spiderfoot
 # 4. Install dependencies:
 pip install -r requirements.txt
 # 5. Run:
@@ -131,7 +150,7 @@ theHarvester -d company.com -b all -f results
 ### GAMKERS-DDOS
 ```bash
 # 1. Enter folder:
-cd GAMKERS-DDOS
+cd hacking/GAMKERS-DDOS
 # 2. Run (zero dependencies, just needs Python 3):
 python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10
 ```
