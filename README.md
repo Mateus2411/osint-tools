@@ -1,4 +1,4 @@
-# Ferramentas de OSINT - Guia Completo
+# Global-Tools - Guia Completo (OSINT + Hacking)
 
 <p align="center">
   <a href="./README.en.md">🇬🇧 English</a> | <b>🇧🇷 Português</b>
@@ -11,9 +11,31 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 
 ---
 
+## 📁 Estrutura do Projeto
+
+```
+Global-Tools/
+├── 📂 osint/            # Ferramentas de OSINT
+│   ├── holohe/          # Descoberta de contas por email
+│   ├── spiderfoot/      # OSINT automático
+│   ├── theHarvester/    # Coleta de emails/subdomínios
+│   └── Mr.Holmes/       # Investigação GUI
+├── 📂 hacking/          # Ferramentas de pentest/hacking
+│   ├── GAMKERS-DDOS/    # Teste de stress UDP
+│   ├── RedTiger-Tools/  # Pentest + OSINT all-in-one
+│   └── setoolkit/       # Social-Engineer Toolkit (via WSL2)
+├── OSINT-REPOS.md       # Lista de repositórios OSINT/pentest
+├── 📂 docs/               # Documentação por ferramenta (PT + EN)
+│   └── ferramentas/       # 1 arquivo por ferramenta + INDICE.md
+├── README.md            # Este guia (PT)
+└── README.en.md         # This guide (EN)
+```
+
+---
+
 ## 🛠️ Ferramentas Disponíveis
 
-### 1️⃣ [Holehe](./holohe/) 📧
+### 1️⃣ [Holehe](./osint/holohe/) 📧
 **Ferramenta para descobrir contas associadas a e-mail**
 - **Repositório**: https://github.com/megadose/holehe
 - **Função**: Verificar contas em mais de 100 sites (Instagram, Twitter, etc)
@@ -21,7 +43,7 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Instalação**: `pip install holehe`
 - **Uso**: `holehe email@email.com`
 
-### 2️⃣ [SpiderFoot](./spiderfoot/) 🕷️
+### 2️⃣ [SpiderFoot](./osint/spiderfoot/) 🕷️
 **Ferramenta extremamente poderosa de OSINT automático**
 - **Repositório**: https://github.com/smicallef/spiderfoot
 - **Função**: Investigação completa e automática
@@ -29,7 +51,7 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Interface**: Web + CLI
 - **Uso**: `py -3.14 sf.py -l 127.0.0.1:5001`
 
-### 3️⃣ [theHarvester](./theHarvester/) 🌾
+### 3️⃣ [theHarvester](./osint/theHarvester/) 🌾
 **Ferramenta clássica para coleta de informações OSINT**
 - **Repositório**: https://github.com/laramies/theHarvester
 - **Função**: Coleta de emails, subdomínios, hosts, IPs de múltiplas fontes
@@ -37,7 +59,7 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Instalação**: `pip install theHarvester`
 - **Uso**: `theHarvester -d dominio.com -b google,bing`
 
-### 4️⃣ [Mr.Holmes](./Mr.Holmes/) 🔍
+### 4️⃣ [Mr.Holmes](./osint/Mr.Holmes/) 🔍
 **Ferramenta de coleta de informações (OSINT) com interface gráfica**
 - **Repositório**: https://github.com/Lucksi/Mr.Holmes
 - **Função**: Coletar informações sobre domínios, usernames e telefones via fontes públicas
@@ -47,7 +69,7 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Uso**: `python MrHolmes.py` (ou `Launchers/Win_Launcher.exe`)
 - **Config**: `Configuration/Configuration.ini` (WhoIS API: https://whois.whoisxmlapi.com)
 
-### 5️⃣ [GAMKERS-DDOS](./GAMKERS-DDOS/) ⚡
+### 5️⃣ [GAMKERS-DDOS](./hacking/GAMKERS-DDOS/) ⚡
 **Ferramenta de teste de stress UDP multithread otimizada**
 - **Repositório**: https://github.com/Mateus2411/osint-tools
 - **Função**: Teste de stress/denial com pacotes UDP multithread
@@ -56,7 +78,7 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Uso**: `python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10`
 - **⚠️ Apenas para testes autorizados / localhost**
 
-### 6️⃣ [RedTiger-Tools](./RedTiger-Tools/) 🐯
+### 6️⃣ [RedTiger-Tools](./hacking/RedTiger-Tools/) 🐯
 **Plataforma multifunção de pentest + OSINT com sistema de plugins**
 - **Repositório**: https://github.com/loxy0devlp/RedTiger-Tools
 - **Função**: Centralizar pentest e OSINT numa ferramenta só (CLI + interface interativa)
@@ -65,6 +87,15 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 - **Extras**: scanner/deletor de metadados, cloner de sites, plugins em Python
 - **Instalação**: `python setup.py`
 - **Uso**: `python redtiger.py` (ex: `python redtiger.py -pnl -p "+551****9999"`)
+
+### 7️⃣ [setoolkit](./hacking/setoolkit/) 🎣
+**Social-Engineer Toolkit — framework de testes de engenharia social autorizados**
+- **Repositório**: https://github.com/trustedsec/social-engineer-toolkit
+- **Função**: Vetores guiados de social engineering para red team com consentimento (phishing, credenciais, payloads)
+- **Plataforma**: Linux — no Windows roda via **WSL2 Ubuntu** (Python 3.12, venv em `~/.venvs/setoolkit`, código em `~/setoolkit`)
+- **Uso**: duplo clique em `hacking/setoolkit/run-setoolkit.bat` (pede senha do WSL/sudo)
+- **Detalhes**: ver `hacking/setoolkit/README-WINDOWS-WSL.md`
+- **⚠️ Apenas para testes autorizados / lab — o Defender pode sinalizar como hacktool**
 
 ---
 
@@ -75,7 +106,7 @@ O uso indevido para comprometer a segurança ou privacidade de terceiros não é
 # 1. Clonar o repositório:
 git clone https://github.com/Lucksi/Mr.Holmes
 # 2. Entrar na pasta e instalar:
-cd Mr.Holmes
+cd osint/Mr.Holmes
 Install.cmd
 # 3. Rodar:
 python MrHolmes.py
@@ -86,7 +117,7 @@ python MrHolmes.py
 # 1. Clonar o repositório:
 git clone https://github.com/loxy0devlp/RedTiger-Tools
 # 2. Entrar na pasta:
-cd RedTiger-Tools
+cd hacking/RedTiger-Tools
 # 3. Instalar dependências:
 python setup.py
 # 4. Rodar:
@@ -105,11 +136,11 @@ holehe email@email.com
 
 ### SpiderFoot
 ```bash
-# 1. Entrar na pasta: C:\osint
+# 1. Entrar na pasta: C:\Global-Tools
 # 2. Clonar:
 git clone https://github.com/smicallef/spiderfoot
 # 3. Entrar na pasta:
-cd spiderfoot
+cd osint/spiderfoot
 # 4. Instalar dependências:
 pip install -r requirements.txt
 # 5. Rodar:
@@ -131,9 +162,18 @@ theHarvester -d empresa.com -b all -f resultados
 ### GAMKERS-DDOS
 ```bash
 # 1. Entrar na pasta:
-cd GAMKERS-DDOS
+cd hacking/GAMKERS-DDOS
 # 2. Rodar (dependência zero, só precisa de Python 3):
 python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10
+```
+
+### setoolkit (via WSL2)
+```powershell
+# 1. Duplo clique em hacking/setoolkit/run-setoolkit.bat
+#    (ou no PowerShell — o cd é obrigatório, o SET usa caminhos relativos:)
+wsl -d Ubuntu -- bash -lc "cd /home/keila/setoolkit && sudo /home/keila/.venvs/setoolkit/bin/python /home/keila/setoolkit/setoolkit"
+# 2. Digite a senha do WSL (sudo) e aceite os termos com "y"
+# Setup do zero: bash hacking/setoolkit/run-setoolkit-wsl.sh (dentro do WSL)
 ```
 
 ---
@@ -148,6 +188,7 @@ python GAMKERS-DDOS.py 127.0.0.1 -p 80 -t 4 -d 10
 | **Mr.Holmes** | Investigação GUI completa | Domínios, usernames, telefones, dorks, gráficos/mapas |
 | **GAMKERS-DDOS** | Teste de stress UDP | Pacotes UDP multithread, pps, payload configurável |
 | **RedTiger-Tools** | Pentest + OSINT all-in-one | Scanners, dorks, wallets crypto, telefone/IP/email/Instagram |
+| **setoolkit** | Engenharia social autorizada | Vetores guiados (phishing, credenciais, payloads) via WSL2 |
 
 ---
 
@@ -272,6 +313,7 @@ pip install lxml
 - **RedTiger-Tools**: https://github.com/loxy0devlp/RedTiger-Tools
 - **SpiderFoot**: https://www.spiderfoot.net/documentation
 - **theHarvester**: https://github.com/laramies/theHarvester/wiki
+- **setoolkit**: https://github.com/trustedsec/social-engineer-toolkit (manual em `hacking/setoolkit/readme/`)
 
 ### Comunidades
 - **Discord SpiderFoot**: https://discord.gg/vyvztrG
@@ -331,5 +373,12 @@ Este conjunto de ferramentas OSINT oferece capacidades abrangentes para investig
 - **theHarvester**: Coleta de informações de múltiplas fontes
 - **Mr.Holmes**: Investigação GUI com dorks, mapas e gráficos
 - **RedTiger-Tools**: Suite de pentest + OSINT com plugins
+- **setoolkit**: Framework de engenharia social para testes autorizados (via WSL2)
 
 **Use sempre de forma ética, legal e responsável!** 🕵️‍♂️🔍
+
+---
+
+## 📖 Documentação detalhada
+
+Guias por ferramenta (português + inglês): [`docs/ferramentas/INDICE.md`](./docs/ferramentas/INDICE.md) — o que cada uma faz, como funciona cada módulo, instalação e exemplos. O setoolkit tem docs próprias em [`hacking/setoolkit/docs/modulos/INDICE.md`](./hacking/setoolkit/docs/modulos/INDICE.md).
